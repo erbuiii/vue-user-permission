@@ -11,12 +11,14 @@ import { getToken } from "./utils/auth";
 //不重定向白名单
 const whiteList = ['/login', 'authredirect']
 
+//对白名单以外的跳转进行拦截然后跳转登录，同时判断用户权限，是否登录等
 router.beforeEach((to, from, next) => {
     //判断是否有token
     if (getToken()) {
         if(to.path === '/login') {
             next()
         } else {
+            //判断当前用户是否已拉取完user_info信息
             if (store.getters.roles.length === 0) {
 
                 //拉取用户信息
@@ -28,7 +30,8 @@ router.beforeEach((to, from, next) => {
                         //动态添加可访问路由表
                         router.addRoutes(store.getters.addRoutes);
 
-                        //hack方法，确保addRoutes已完成
+                        //hack方法，确保addRoutes已完成 -->
+                        //在router.addRoutes之后的next()可能会失效，因为可能next()的时候路由并没有完全add完成
                         //设置replace为true：导航不会留下历史记录？？
                         next({...to, replace: true})
                     })

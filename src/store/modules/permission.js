@@ -1,3 +1,7 @@
+/**
+ * 通过用户的权限和之前在router.js里面的asyncRouterMap的每一个页面所需要的权限做匹配
+ * 最后返回一个该用户能访问的路由有哪些
+ */
 import { asyncRouterMap, constantRouterMap } from "@/router";
 import { resolve } from "uri-js";
 
@@ -16,7 +20,7 @@ function hasPermission(roles, route) {
 }
 
 /** 
- * 递归过滤递归路由表，返回符合用户角色权限的路由表
+ * 递归过滤异步路由表，返回符合用户角色权限的路由表
  * @param asyncRouterMap
  * @param roles
 */
