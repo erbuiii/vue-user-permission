@@ -11,6 +11,7 @@ const service = axios.create({
     timeout: 15000  //请求超时时间
 })
 
+//面临困境立即立即离开
 //request拦截器
 service.interceptors.request.use(config => {
     //在请求发出之前
